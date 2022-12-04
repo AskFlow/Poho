@@ -6,11 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody rb;
     public float Speed = 5;
-    public float JumpSpeed = 5;
+    public float JumpSpeed = 15;
 
     public bool isJumping;
     public bool isGrounded;
 
+
+    float distToGround;
     public Transform groundCheck;
 
     void Start()
@@ -19,14 +21,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update() {
-        isGrounded = Physics2D.OverlapArea(groundCheck.position, groundCheck.position);
+        isGrounded = Physics.Raycast(gameObject.transform.position, -Vector3.up, distToGround );
 
 
         float h = Input.GetAxis("Horizontal") * Speed;
 
         rb.velocity = new Vector2(h, rb.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded){
+        if (Input.GetKeyDown(KeyCode.Space) && CheckGround()){
             isJumping = true;
         }
 
@@ -34,5 +36,11 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(transform.up * JumpSpeed, ForceMode.Impulse);
             isJumping = false;
         }
+    }
+
+    public bool CheckGround()
+    {
+        distToGround = GetComponent<Collider>().bounds.extents.y;
+        return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
     }
 }

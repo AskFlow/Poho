@@ -8,16 +8,22 @@ public class RangedEnemyController : MonoBehaviour
     public Transform player;
     public Transform shotPoint;
     public Transform gun;
- 
+    public Vector3 startpoint;
+
     public GameObject enemyProjectile;
  
     public float followPlayerRange;
     private bool inRange;
     public float attackRange;
- 
+
     public float startTimeBtwnShots;
     private float timeBtwnShots;
- 
+
+
+    private void Start()
+    {
+        startpoint = transform.position;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -32,7 +38,9 @@ public class RangedEnemyController : MonoBehaviour
         }
         else
         {
+            transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
+
         }
  
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
