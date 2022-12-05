@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update() {
-        isGrounded = Physics.Raycast(gameObject.transform.position, -Vector3.up, distToGround );
 
 
         float h = Input.GetAxis("Horizontal") * Speed;
