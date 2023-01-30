@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedEnemyController : MonoBehaviour
+public class RangedEnemyController2attack : MonoBehaviour
 {
+    
 
-     
+    public GameObject bullet;
 
+    public Transform bulletpos;
+    public bool canShoot;
+    public float timer;
     //////////////////
     public float moveSpeed;
     public Transform player;
@@ -15,7 +19,7 @@ public class RangedEnemyController : MonoBehaviour
     public Vector3 startpoint;
 
     public GameObject enemyProjectile;
- 
+
     public float followPlayerRange;
     private bool inRange;
     public float attackRange;
@@ -25,42 +29,40 @@ public class RangedEnemyController : MonoBehaviour
 
 
     private void Start()
-    {       
+    {
         startpoint = transform.position;
     }
     // Update is called once per frame
     void Update()
-    {        
+    {
         Vector3 differance = player.position - gun.transform.position;
         float rotZ = Mathf.Atan2(differance.y, differance.x) * Mathf.Rad2Deg;
         gun.transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
- 
+
         if (Vector3.Distance(transform.position, player.position) <= followPlayerRange && Vector3.Distance(transform.position, player.position) > attackRange)
         {
             inRange = true;
+            timer += Time.deltaTime;
 
+            if (timer > 2)
+            {
+                timer = 0;
+                shoot();
+            }
         }
-        else
+        else if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
-            transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime );
+            inRange = true;
+        }
+        else 
+        {
+            transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
-           
         }
- 
-        if (Vector3.Distance(transform.position, player.position) <= attackRange)
-        {
-            if (timeBtwnShots <= 0)
-            {
-                Instantiate(enemyProjectile, shotPoint.position, shotPoint.transform.rotation);
-                timeBtwnShots = startTimeBtwnShots;
-            }
-            else
-            {
-                timeBtwnShots -= Time.deltaTime;
-            }
-        }
+        
+        Debug.Log(inRange);
     }
- 
+
     void FixedUpdate()
     {
         if (inRange)
@@ -68,11 +70,15 @@ public class RangedEnemyController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
         }
     }
- 
+
     void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, followPlayerRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+     public void shoot()
+    {
+        Instantiate(bullet, bulletpos.position, Quaternion.identity);
     }
 }
