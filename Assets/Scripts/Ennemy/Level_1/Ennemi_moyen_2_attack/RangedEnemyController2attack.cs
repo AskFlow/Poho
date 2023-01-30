@@ -7,7 +7,7 @@ public class RangedEnemyController2attack : MonoBehaviour
     
 
     public GameObject bullet;
-
+    public LayerMask PlayerLayer;
     public Transform bulletpos;
     public bool canShoot;
     public float timer;
@@ -27,6 +27,8 @@ public class RangedEnemyController2attack : MonoBehaviour
     public float startTimeBtwnShots;
     private float timeBtwnShots;
 
+    public float attackRate = 1f;
+    float nextAttackTime = 0f;
 
     private void Start()
     {
@@ -53,6 +55,13 @@ public class RangedEnemyController2attack : MonoBehaviour
         else if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
             inRange = true;
+           
+            if (Time.time >= nextAttackTime)
+            {
+                AttackMelee();
+                nextAttackTime = Time.time + 3f / attackRate;
+                Debug.Log("attackmelee");
+            }
         }
         else 
         {
@@ -60,7 +69,7 @@ public class RangedEnemyController2attack : MonoBehaviour
             inRange = false;
         }
         
-        Debug.Log(inRange);
+  
     }
 
     void FixedUpdate()
@@ -80,5 +89,19 @@ public class RangedEnemyController2attack : MonoBehaviour
      public void shoot()
     {
         Instantiate(bullet, bulletpos.position, Quaternion.identity);
+    }
+
+    void AttackMelee()
+    {
+        // Jouer l'animation de l'attaque (à l'avenir)
+        
+        // Detecter les ennemies dans la range
+        Collider[] hitPlayer = Physics.OverlapSphere(transform.position, attackRange, PlayerLayer);
+       
+        // Appliquer les damages
+        foreach (Collider Player in hitPlayer)
+        {
+            Debug.Log("Vous avez touché " + Player.name);           
+        }
     }
 }
