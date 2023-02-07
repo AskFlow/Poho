@@ -7,42 +7,67 @@ public class PlayerCombat : MonoBehaviour
     public Transform attackPoint;
     public LayerMask enemyLayers;
 
-    // Range et dégâts de l'attaque
-    public float attackRange = 0.5f;
-    public int attackDamage = 40;
+    public GameObject playerProjectile;
+
+    // Range et dégâts de l'attaque Melee
+    public float attackMeleeRange = 1.5f;
+    public int attackMeleeDamage = 40;
+
+    // Dégâts de l'attaque à distance
+    public int attackDistanceDamage = 20;
 
     // Attaques par secondes
-    public float attackRate = 2f;
-    float nextAttackTime = 0f;
+    public float attackMeleeRate = 2f;
+
+    public float attackDistanceRate = 2f;
+
+    float nextAttackMeleeTime = 0f;
+
+    float nextAttackDistanceTime = 0f;
 
     void Update()
     {
-        if(Time.time >= nextAttackTime){
+        if(Time.time >= nextAttackMeleeTime){
             if (Input.GetKeyDown(KeyCode.E)){
-                Attack();
-                nextAttackTime = Time.time + 1f / attackRate;
+                AttackMelee();
+                nextAttackMeleeTime = Time.time + 1f / attackMeleeRate;
+            }   
+        }
+
+        if(Time.time >= nextAttackDistanceTime){
+            if (Input.GetKeyDown(KeyCode.F)){
+                AttackDistance();
+                nextAttackDistanceTime = Time.time + 1f / attackDistanceRate;
             }   
         }
     }
 
-    void Attack(){
+    void AttackMelee(){
         // Jouer l'animation de l'attaque (à l'avenir)
 
         // Detecter les ennemies dans la range
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackMeleeRange, enemyLayers);
 
         // Appliquer les damages
         foreach(Collider enemy in hitEnemies){
             Debug.Log("Vous avez touché " + enemy.name);
-            enemy.GetComponent<EnemyHealth>().TakeDamage(attackDamage);
+            enemy.GetComponent<EnemyHealth>().TakeDamage(attackMeleeDamage);
         }
     }
+
+    void AttackDistance(){
+        // Jouer l'animation de l'attaque (à l'avenir)
+
+        Instantiate(playerProjectile, transform.position, transform.rotation);
+    }
+
 
     private void OnDrawGizmosSelected() {
         if(attackPoint == null){
             return;
         }
 
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(attackPoint.position, attackMeleeRange);
     }
 }
