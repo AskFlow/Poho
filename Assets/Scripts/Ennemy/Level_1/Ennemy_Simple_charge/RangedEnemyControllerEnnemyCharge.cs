@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedEnemyController2attack : MonoBehaviour
+public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
 {
-    
     public GameObject bullet;
     public LayerMask PlayerLayer;
     public Transform bulletpos;
@@ -29,6 +28,10 @@ public class RangedEnemyController2attack : MonoBehaviour
     public float attackRate = 1f;
     float nextAttackTime = 0f;
 
+    [SerializeField] private float chargeSpeed;
+    [SerializeField] private float chargeTime;
+    private bool isCharging;
+
     private void Start()
     {
         startpoint = transform.position;
@@ -43,18 +46,13 @@ public class RangedEnemyController2attack : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) <= followPlayerRange && Vector3.Distance(transform.position, player.position) > attackRange)
         {
             inRange = true;
-            timer += Time.deltaTime;
-
-            if (timer > 2)
-            {
-                timer = 0;
-                shoot();
-            }
+            StartCoroutine(chargeDelay());
         }
         else if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
             inRange = true;
-           
+            
+
             if (Time.time >= nextAttackTime)
             {
                 AttackMelee();
@@ -62,13 +60,13 @@ public class RangedEnemyController2attack : MonoBehaviour
                 Debug.Log("attackmelee");
             }
         }
-        else 
+        else
         {
             transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
+            
         }
-        
-  
+        Debug.Log(moveSpeed);
     }
 
     void FixedUpdate()
@@ -85,7 +83,7 @@ public class RangedEnemyController2attack : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-     public void shoot()
+    public void shoot()
     {
         Instantiate(bullet, bulletpos.position, Quaternion.identity);
     }
@@ -93,14 +91,26 @@ public class RangedEnemyController2attack : MonoBehaviour
     void AttackMelee()
     {
         // Jouer l'animation de l'attaque (à l'avenir)
-        
+
         // Detecter les ennemies dans la range
         Collider[] hitPlayer = Physics.OverlapSphere(transform.position, attackRange, PlayerLayer);
-       
+
         // Appliquer les damages
         foreach (Collider Player in hitPlayer)
         {
-            Debug.Log("Vous avez touché " + Player.name);           
+            Debug.Log("Vous avez touché " + Player.name);
         }
     }
+ 
+    IEnumerator chargeDelay()
+    {
+        moveSpeed = 0;
+        yield return new WaitForSeconds(2);
+        moveSpeed = 6;
+        yield return new WaitForSeconds(2);
+        moveSpeed = 3;
+    }
 }
+
+  
+
