@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-    public Transform attackPoint;
+    public Transform attackMeleePoint;
+    public Transform attackDistancePoint;
     public LayerMask enemyLayers;
 
     public GameObject playerProjectile;
@@ -46,7 +47,7 @@ public class PlayerCombat : MonoBehaviour
         // Jouer l'animation de l'attaque (à l'avenir)
 
         // Detecter les ennemies dans la range
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackMeleeRange, enemyLayers);
+        Collider[] hitEnemies = Physics.OverlapSphere(attackMeleePoint.position, attackMeleeRange, enemyLayers);
 
         // Appliquer les damages
         foreach(Collider enemy in hitEnemies){
@@ -58,16 +59,16 @@ public class PlayerCombat : MonoBehaviour
     void AttackDistance(){
         // Jouer l'animation de l'attaque (à l'avenir)
 
-        Instantiate(playerProjectile, transform.position, transform.rotation);
+        Instantiate(playerProjectile, attackDistancePoint.position, attackDistancePoint.rotation);
     }
 
 
     private void OnDrawGizmosSelected() {
-        if(attackPoint == null){
+        if(attackMeleePoint == null){
             return;
         }
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(attackPoint.position, attackMeleeRange);
+        Gizmos.DrawWireSphere(attackDistancePoint.position, attackMeleeRange);
     }
 }
