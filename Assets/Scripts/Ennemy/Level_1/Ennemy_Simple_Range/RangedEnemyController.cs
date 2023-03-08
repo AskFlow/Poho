@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class RangedEnemyController : MonoBehaviour
 {
+<<<<<<< Updated upstream
 
      
 
     //////////////////
+=======
+    Animator animator;
+>>>>>>> Stashed changes
     public float moveSpeed;
     public Transform player;
     public Transform shotPoint;
@@ -23,6 +27,13 @@ public class RangedEnemyController : MonoBehaviour
     public float startTimeBtwnShots;
     private float timeBtwnShots;
 
+    private bool isAttacking = false;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        player = GameObject.FindWithTag("Player").transform;
+    }
 
     private void Start()
     {       
@@ -34,24 +45,59 @@ public class RangedEnemyController : MonoBehaviour
         Vector3 differance = player.position - gun.transform.position;
         float rotZ = Mathf.Atan2(differance.y, differance.x) * Mathf.Rad2Deg;
         gun.transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
- 
-        if (Vector3.Distance(transform.position, player.position) <= followPlayerRange && Vector3.Distance(transform.position, player.position) > attackRange)
+        
+
+        if (Vector3.Distance(transform.position, player.position) <= followPlayerRange && Vector3.Distance(transform.position, player.position) >= attackRange && !isAttacking)
         {
             inRange = true;
+<<<<<<< Updated upstream
 
+=======
+            animator.SetFloat("walk", moveSpeed);
+
+            Vector3 playerPos = player.position;
+            playerPos.y = transform.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
+>>>>>>> Stashed changes
         }
-        else
+        else if ((!(transform.position.x >= startpoint.x - 1 && transform.position.x <= startpoint.x + 1) || !(transform.position.z >= startpoint.z - 0.2 && transform.position.z <= startpoint.z + 0.2)) && !isAttacking)
         {
+<<<<<<< Updated upstream
             transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime );
             inRange = false;
            
+=======
+            Debug.Log("NOT");
+            transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
+            inRange = false;
+            animator.SetFloat("walk", moveSpeed);
+
+            Vector3 spawnPos = startpoint;
+            spawnPos.y = transform.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(spawnPos - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
+        } 
+        else
+        {
+            animator.SetFloat("walk", 0f);
+        }
+
+        if (((transform.position.x >= startpoint.x - 1 && transform.position.x <= startpoint.x + 1) && (transform.position.z >= startpoint.z - 0.2 && transform.position.z <= startpoint.z + 0.2)) || isAttacking)
+        {
+            Vector3 playerPos = player.position;
+            playerPos.y = transform.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
+>>>>>>> Stashed changes
         }
  
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
-            if (timeBtwnShots <= 0)
+            if (timeBtwnShots <= 0 && !isAttacking)
             {
-                Instantiate(enemyProjectile, shotPoint.position, shotPoint.transform.rotation);
+                isAttacking = true;
+                animator.SetTrigger("attack");
                 timeBtwnShots = startTimeBtwnShots;
             }
             else
@@ -65,7 +111,9 @@ public class RangedEnemyController : MonoBehaviour
     {
         if (inRange)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+            Vector3 playerPos = player.position;
+            //playerPos.y = transform.position.y;
+            transform.position = Vector3.MoveTowards(transform.position, playerPos, moveSpeed * Time.deltaTime);
         }
     }
  
@@ -74,5 +122,11 @@ public class RangedEnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, followPlayerRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    void Attack()
+    {
+        Instantiate(enemyProjectile, shotPoint.position, shotPoint.transform.rotation);
+        isAttacking = false;
     }
 }
