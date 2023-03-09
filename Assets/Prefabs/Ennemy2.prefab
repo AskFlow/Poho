@@ -201,7 +201,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mover: {fileID: 5027611722099705839}
   displacementDist: 5
+  repelsDist: 1
+  repelsSpeed: 1000
   teleportCooldown: 2
+  repelsCooldown: 0
 --- !u!114 &5027611722099705839
 MonoBehaviour:
   m_ObjectHideFlags: 0
