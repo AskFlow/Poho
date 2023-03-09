@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class RangedEnemyController : MonoBehaviour
 {
-<<<<<<< Updated upstream
 
-     
-
-    //////////////////
-=======
     Animator animator;
->>>>>>> Stashed changes
     public float moveSpeed;
     public Transform player;
     public Transform shotPoint;
@@ -50,24 +44,15 @@ public class RangedEnemyController : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) <= followPlayerRange && Vector3.Distance(transform.position, player.position) >= attackRange && !isAttacking)
         {
             inRange = true;
-<<<<<<< Updated upstream
-
-=======
             animator.SetFloat("walk", moveSpeed);
 
             Vector3 playerPos = player.position;
             playerPos.y = transform.position.y;
             Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
->>>>>>> Stashed changes
         }
         else if ((!(transform.position.x >= startpoint.x - 1 && transform.position.x <= startpoint.x + 1) || !(transform.position.z >= startpoint.z - 0.2 && transform.position.z <= startpoint.z + 0.2)) && !isAttacking)
         {
-<<<<<<< Updated upstream
-            transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime );
-            inRange = false;
-           
-=======
             Debug.Log("NOT");
             transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
@@ -89,7 +74,6 @@ public class RangedEnemyController : MonoBehaviour
             playerPos.y = transform.position.y;
             Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
->>>>>>> Stashed changes
         }
  
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
