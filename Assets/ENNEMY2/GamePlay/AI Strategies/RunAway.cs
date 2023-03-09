@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RunAway : MonoBehaviour
 {
+    Animator animator;
     [SerializeField] private NavAgentMover mover = null;
     [SerializeField] private float displacementDist = 5f;
     [SerializeField] private float repelsDist = 1f;
@@ -14,7 +15,14 @@ public class RunAway : MonoBehaviour
     float lastTeleport;
     float lastRepels;
 
-    private bool Teleport(Vector3 pos) 
+    Vector3 tpDestination;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    private bool CanTeleport(Vector3 pos) 
     {
         if (Time.time-lastTeleport<teleportCooldown)
         {
@@ -22,29 +30,27 @@ public class RunAway : MonoBehaviour
         }
         Debug.Log("Teleport");
         lastTeleport = Time.time;
-        mover.Teleport(pos);
+        tpDestination = pos;
+        animator.SetTrigger("teleport");
         return true;
     }
 
-    private bool Repousser() 
+    private void TeleportNow()
+    {
+        mover.Teleport(tpDestination);
+    }
+
+    private bool CanRepousser() 
     {
         if (Time.time-lastRepels<repelsCooldown)
         {
             return false;
         }
         if (player.gameObject.GetComponent<NavAgentMover>()) {
-            Vector3 normDir = (transform.position - player.transform.position).normalized;
-            normDir.y = 0;
-            normDir.z = 0;
-            if (transform.position.x - player.transform.position.x >= 0) {
-                normDir.x = 1;
-            } else {
-                normDir.x = -1;
-            }
             if (player.transform.position.x > (transform.position.x - 3) && player.transform.position.x < (transform.position.x + 3)) {
                 Debug.Log("Repousse");
                 lastRepels = Time.time;
-                player.gameObject.GetComponent<NavAgentMover>().MoveToPos(player.transform.position - (normDir * repelsDist), repelsSpeed);
+                animator.SetTrigger("push");
                 return true;                  
             } else {
                 return false;
@@ -52,6 +58,22 @@ public class RunAway : MonoBehaviour
         } else {
             return false;
         }
+    }
+
+    private void Push()
+    {
+        Vector3 normDir = (transform.position - player.transform.position).normalized;
+        normDir.y = 0;
+        normDir.z = 0;
+        if (transform.position.x - player.transform.position.x >= 0)
+        {
+            normDir.x = 1;
+        }
+        else
+        {
+            normDir.x = -1;
+        }
+        player.gameObject.GetComponent<NavAgentMover>().MoveToPos(player.transform.position - (normDir * repelsDist), repelsSpeed);
     }
 
     private Color origColor;
@@ -121,6 +143,7 @@ public class RunAway : MonoBehaviour
 
     private void Evadeplayer() 
     {
+        animator.SetFloat("speed", 1);
         Vector3 normDir = (player.transform.position - transform.position).normalized;
         normDir.y = 0;
         normDir.z = 0;
@@ -129,8 +152,8 @@ public class RunAway : MonoBehaviour
         } else {
             normDir.x = -1;
         }
-        Repousser();
-        bool tp = Teleport(transform.position - (normDir * displacementDist));
+        CanRepousser();
+        bool tp = CanTeleport(transform.position - (normDir * displacementDist));
         if (!tp)
         {
             mover.MoveToPos(transform.position - (normDir * displacementDist));
@@ -146,6 +169,7 @@ public class RunAway : MonoBehaviour
     {
         if (mover.HasArrived && PassedTime(nextMoveTime))
         {
+            animator.SetFloat("speed", 0);
             nextMoveTime = SetFutureRandomTime(MIN_BTWN_MOVES, 5f);
             //mover.MoveToPos(Vec3_Utils.PlaceNearMe(transform, 12f));
         }
