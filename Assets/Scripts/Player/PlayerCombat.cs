@@ -62,6 +62,25 @@ public class PlayerCombat : MonoBehaviour
         Instantiate(playerProjectile, attackDistancePoint.position, attackDistancePoint.rotation);
     }
 
+    //Raycast check if WallMovable
+    //public string objectCast()
+    //{
+    //    Debug.Log("objectCast");
+    //    string result = "";
+    //    Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //    RaycastHit2D hitObstacle = Physics2D.Raycast(obstacleRayObject.transform.position, mouseWorldPosition - obstacleRayObject.transform.position, obstacleRayDistance);
+    //    if (hitObstacle.collider != null)
+    //    {
+    //        Debug.Log(hitObstacle.collider.name);
+    //        result = hitObstacle.collider.name;
+    //        Debug.DrawRay(obstacleRayObject.transform.position, mouseWorldPosition - obstacleRayObject.transform.position, Color.red);
+    //    }
+    //    else
+    //    {
+    //        Debug.DrawRay(obstacleRayObject.transform.position, mouseWorldPosition - obstacleRayObject.transform.position, Color.green);
+    //    }
+    //    return result;
+    //}
 
     private void OnDrawGizmosSelected() {
         if(attackMeleePoint == null){
