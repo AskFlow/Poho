@@ -16,7 +16,7 @@ public class SpellBlue : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.Translate(Vector2.right * bulletSpeed * Time.deltaTime);
+        transform.Translate(Vector3.back * bulletSpeed * Time.deltaTime);
     }
  
     void DestroyProjectile()
