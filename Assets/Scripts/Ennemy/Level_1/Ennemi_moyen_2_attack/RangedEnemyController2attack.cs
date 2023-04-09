@@ -66,9 +66,7 @@ public class RangedEnemyController2attack : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
-        }
-        
-  
+        }  
     }
 
     void FixedUpdate()
@@ -88,7 +86,15 @@ public class RangedEnemyController2attack : MonoBehaviour
      public void shoot()
     {
         Instantiate(bullet, bulletpos.position, Quaternion.identity);
+        Collider[] hitPlayer = Physics.OverlapSphere(transform.position, followPlayerRange, PlayerLayer);
+
+        // Appliquer les damages
+        foreach (Collider Player in hitPlayer)
+        {
+            Debug.Log("Vous avez touché " + Player.name);
+        }
     }
+
 
     void AttackMelee()
     {

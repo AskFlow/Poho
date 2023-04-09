@@ -137,7 +137,7 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         yield return new WaitForSeconds(2);
         moveSpeed = 6;
         yield return new WaitForSeconds(2);
-        moveSpeed = 3;
+        moveSpeed = 3;     
     }
     /*
      void makeEnnemiRotation()
