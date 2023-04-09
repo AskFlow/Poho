@@ -5,12 +5,15 @@ using UnityEngine;
 public class MovableObject : MonoBehaviour
 {
     GameObject player;
+    BoxCollider col;
+    public LayerMask movableLayer;
 
     bool isGrab = false;
 
     private void Start()
     {
         player = GameObject.Find("Player");
+        col = GetComponent<Collider>() as BoxCollider;
     }
 
     private void Update()
@@ -23,17 +26,26 @@ public class MovableObject : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
+    void OnMouseOver()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        BoxCollider col = GetComponent<Collider>() as BoxCollider;
+        Debug.DrawRay(player.transform.position, transform.position, Color.red);
 
-        Debug.Log("YES");
-        isGrab = !isGrab;
+        if (Input.GetKey(KeyCode.R))
+        {
+            RaycastHit hit;
 
-            foreach (BoxCollider c in GetComponents<BoxCollider>())
+            if (Physics.Raycast(player.transform.position, transform.position, out hit, 10.0f, movableLayer))
             {
-                c.isTrigger = isGrab; //Or false if you want to desactivate them all
+                Debug.Log("oui");
+
+                isGrab = true;
+                col.isTrigger = true;
             }
+        }
+        else
+        {
+            isGrab = false;
+            col.isTrigger = false;
+        }
     }
 }

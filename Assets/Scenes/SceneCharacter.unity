@@ -869,15 +869,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackMeleePoint: {fileID: 1729246506}
   attackDistancePoint: {fileID: 363721774}
+  mainCamera: {fileID: 810324420}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  movableLayer:
+    serializedVersion: 2
+    m_Bits: 128
   playerProjectile: {fileID: 4794043405585894037, guid: 37138c0c33167b04fa1fb90b7f5a794f, type: 3}
   attackMeleeRange: 1.5
   attackMeleeDamage: 40
   attackDistanceDamage: 20
   attackMeleeRate: 2
   attackDistanceRate: 2
+  moveObjectDistance: 3
 --- !u!95 &1035761214
 Animator:
   serializedVersion: 4
@@ -1009,7 +1014,7 @@ GameObject:
   - component: {fileID: 1362614210}
   - component: {fileID: 1362614209}
   - component: {fileID: 1362614213}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CubeTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1087,7 +1092,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362614208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.21, y: 1.81, z: 0}
+  m_LocalPosition: {x: 2.21, y: 4.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1106,6 +1111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a06f36cb68bf74d98d1f6296c23fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movableLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1581462257
 GameObject:
   m_ObjectHideFlags: 0

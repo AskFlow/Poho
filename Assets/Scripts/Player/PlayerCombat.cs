@@ -6,7 +6,10 @@ public class PlayerCombat : MonoBehaviour
 {
     public Transform attackMeleePoint;
     public Transform attackDistancePoint;
+    public Camera mainCamera;
+
     public LayerMask enemyLayers;
+    public LayerMask movableLayer;
 
     public GameObject playerProjectile;
 
@@ -19,8 +22,8 @@ public class PlayerCombat : MonoBehaviour
 
     // Attaques par secondes
     public float attackMeleeRate = 2f;
-
     public float attackDistanceRate = 2f;
+    public float moveObjectDistance = 3f;
 
     float nextAttackMeleeTime = 0f;
 
@@ -41,6 +44,11 @@ public class PlayerCombat : MonoBehaviour
                 nextAttackDistanceTime = Time.time + 1f / attackDistanceRate;
             }   
         }
+
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    MoveObject();
+        //}
     }
 
     void AttackMelee(){
@@ -60,6 +68,35 @@ public class PlayerCombat : MonoBehaviour
         // Jouer l'animation de l'attaque (à l'avenir)
 
         Instantiate(playerProjectile, attackDistancePoint.position, attackDistancePoint.rotation);
+    }
+
+    void MoveObject()
+    {
+        Debug.Log("MoveObject");
+
+        //RaycastHit2D hitObstacle = Physics2D.Raycast(transform.position, screenPosition - transform.position, moveObjectDistance);
+
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hitObstacle, float.MaxValue, movableLayer))
+        {
+            if (hitObstacle.collider != null)
+            {
+                GameObject objectToMovable = hitObstacle.collider.gameObject;
+
+                objectToMovable.transform.SetPositionAndRotation(Input.mousePosition, objectToMovable.transform.rotation);
+            }
+        }
+
+        /*if (hitObstacle.collider != null)
+        {
+            Debug.Log(hitObstacle.collider.name);
+            Debug.DrawRay(transform.position, screenPosition - transform.position, Color.red);
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, screenPosition - transform.position, Color.green);
+        }*/
     }
 
     //Raycast check if WallMovable
