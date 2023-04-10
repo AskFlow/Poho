@@ -47,7 +47,7 @@ public class Boss : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) <= followPlayerRange && Vector3.Distance(transform.position, player.position) >= attackRange && !isAttacking)
         {
             inRange = true;
-            animator.SetFloat("walk", moveSpeed);
+            animator.SetFloat("moveSpeed", moveSpeed);
 
             Vector3 playerPos = player.position;
             playerPos.y = transform.position.y;
@@ -59,7 +59,7 @@ public class Boss : MonoBehaviour
             Debug.Log("NOT");
             transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
-            animator.SetFloat("walk", moveSpeed);
+            animator.SetFloat("moveSpeed", moveSpeed);
 
             Vector3 spawnPos = startpoint;
             spawnPos.y = transform.position.y;
@@ -68,7 +68,7 @@ public class Boss : MonoBehaviour
         } 
         else
         {
-            //animator.SetFloat("walk", 0f);
+            animator.SetFloat("moveSpeed", 0f);
         }
 
         if (((transform.position.x >= startpoint.x - 1 && transform.position.x <= startpoint.x + 1) && (transform.position.z >= startpoint.z - 0.2 && transform.position.z <= startpoint.z + 0.2)) || isAttacking)
