@@ -5,7 +5,6 @@ using UnityEngine;
 public class RangedEnemyController2attack : MonoBehaviour
 {
     
-
     public GameObject bullet;
     public LayerMask PlayerLayer;
     public Transform bulletpos;
