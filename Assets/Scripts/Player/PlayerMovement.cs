@@ -11,6 +11,15 @@ public class PlayerMovement : MonoBehaviour
     public bool isJumping;
     public bool isGrounded;
 
+    public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode backwardKey = KeyCode.G;
+    public KeyCode attackKey = KeyCode.B;
+    public KeyCode forwardKey = KeyCode.C;
+    public KeyCode useKey = KeyCode.E;
+
+
+
+
 
     float distToGround;
     public Transform groundCheck;
@@ -27,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = new Vector2(h, rb.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.Space) && CheckGround()){
+        if (Input.GetKeyDown(jumpKey) && CheckGround()){
             isJumping = true;
         }
 
