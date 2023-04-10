@@ -9,6 +9,8 @@ public class Boss : MonoBehaviour
     public float moveSpeed;
     public Transform player;
     public Vector3 startpoint;
+    public float currentHP = 100;
+    public float maxHP = 100;
 
     //public Transform gun;
     //public Transform shotPoint;
@@ -45,7 +47,7 @@ public class Boss : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) <= followPlayerRange && Vector3.Distance(transform.position, player.position) >= attackRange && !isAttacking)
         {
             inRange = true;
-            //animator.SetFloat("walk", moveSpeed);
+            animator.SetFloat("walk", moveSpeed);
 
             Vector3 playerPos = player.position;
             playerPos.y = transform.position.y;
@@ -57,7 +59,7 @@ public class Boss : MonoBehaviour
             Debug.Log("NOT");
             transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
-            //animator.SetFloat("walk", moveSpeed);
+            animator.SetFloat("walk", moveSpeed);
 
             Vector3 spawnPos = startpoint;
             spawnPos.y = transform.position.y;
@@ -82,7 +84,14 @@ public class Boss : MonoBehaviour
             if (timeAttack <= 0 && !isAttacking)
             {
                 isAttacking = true;
-                //animator.SetTrigger("attack");
+                if (currentHP <= maxHP*0.5)
+                {
+                    animator.SetTrigger("attackJump");
+                } else
+                {
+                    animator.SetTrigger("attackSimple");
+                }
+                
                 timeAttack = startTimeAttack;
             }
             else
