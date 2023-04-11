@@ -27,6 +27,16 @@ public class EnemyHealth : MonoBehaviour
     void Die(){
         Debug.Log("Ennemi mort !");
 
+        Destroy(gameObject);
+
         // Animation de mort à l'avenir
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.gameObject.tag == "Shockwave")
+        {
+            TakeDamage(20);
+        }
     }
 }
