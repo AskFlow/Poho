@@ -13,6 +13,8 @@ public class PlayerCombat : MonoBehaviour
 
     public GameObject playerProjectile;
 
+    private Animator animator;
+
     // Range et dégâts de l'attaque Melee
     public float attackMeleeRange = 1.5f;
     public int attackMeleeDamage = 40;
@@ -29,7 +31,12 @@ public class PlayerCombat : MonoBehaviour
 
     float nextAttackDistanceTime = 0f;
 
-    void Update()
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    private void Update()
     {
         if(Time.time >= nextAttackMeleeTime){
             if (Input.GetKeyDown(KeyCode.E)){
@@ -52,7 +59,8 @@ public class PlayerCombat : MonoBehaviour
     }
 
     void AttackMelee(){
-        // Jouer l'animation de l'attaque (à l'avenir)
+        // Jouer l'animation de l'attaque
+        animator.SetBool("isAttackingMelee", true);
 
         // Detecter les ennemies dans la range
         Collider[] hitEnemies = Physics.OverlapSphere(attackMeleePoint.position, attackMeleeRange, enemyLayers);
