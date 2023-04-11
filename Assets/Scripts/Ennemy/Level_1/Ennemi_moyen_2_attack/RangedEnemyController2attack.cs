@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RangedEnemyController2attack : MonoBehaviour
 {
-    
     public GameObject bullet;
     public LayerMask PlayerLayer;
     public Transform bulletpos;
@@ -17,7 +16,6 @@ public class RangedEnemyController2attack : MonoBehaviour
     public Transform gun;
     public Vector3 startpoint;
 
-    public GameObject enemyProjectile;
 
     public float followPlayerRange;
     private bool inRange;
@@ -29,9 +27,12 @@ public class RangedEnemyController2attack : MonoBehaviour
     public float attackRate = 1f;
     float nextAttackTime = 0f;
 
+   
+
     private void Start()
     {
         startpoint = transform.position;
+       
     }
     // Update is called once per frame
     void Update()
@@ -49,6 +50,7 @@ public class RangedEnemyController2attack : MonoBehaviour
             {
                 timer = 0;
                 shoot();
+              
             }
         }
         else if (Vector3.Distance(transform.position, player.position) <= attackRange)
@@ -61,12 +63,21 @@ public class RangedEnemyController2attack : MonoBehaviour
                 nextAttackTime = Time.time + 3f / attackRate;
                 Debug.Log("attackmelee");
             }
+            Vector3 playerPos = player.position;
+            playerPos.y = transform.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
         }
         else 
         {
             transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
-        }  
+
+            Vector3 playerPos = player.position;
+            playerPos.y = transform.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
+        }      
     }
 
     void FixedUpdate()
@@ -85,7 +96,9 @@ public class RangedEnemyController2attack : MonoBehaviour
     }
      public void shoot()
     {
+      
         Instantiate(bullet, bulletpos.position, Quaternion.identity);
+        
         Collider[] hitPlayer = Physics.OverlapSphere(transform.position, followPlayerRange, PlayerLayer);
 
         // Appliquer les damages
