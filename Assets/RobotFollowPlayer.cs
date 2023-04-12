@@ -10,6 +10,7 @@ public class RobotFollowPlayer : MonoBehaviour
     public float smoothTime;
     public float rotationSpeed;
 
+    public bool isPick = false;
 
     private  PlayerMovement playerMovement;
     private Vector3 interm;
@@ -19,36 +20,44 @@ public class RobotFollowPlayer : MonoBehaviour
 
     void Start()
     {
-        offset = transform.position - player.transform.position;
+
         playerMovement = player.GetComponent<PlayerMovement>();
+    }
+
+
+    public void pickUpRobot()
+    {
+        offset = new Vector3(-1.5f, 2f,0.4494041f);
+        isPick = true;
     }
 
     void FixedUpdate()
     {
+        if (isPick) { 
+            interm = new Vector3(offset.x* playerMovement.direction, offset.y, offset.z);
+            Vector3 targetPosition = player.transform.position + interm;
 
-        interm = new Vector3(offset.x* playerMovement.direction, offset.y, offset.z);
-        Vector3 targetPosition = player.transform.position + interm;
-
-        targetPosition.x += followDistance;
+            targetPosition.x += followDistance;
 
 
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
 
-        Vector3 direction = player.transform.position - transform.position;
-        direction.z = 0f;
+            Vector3 direction = player.transform.position - transform.position;
+            direction.z = 0f;
 
-        if (direction.magnitude > 0.1f)
-        {
-            targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            if (direction.magnitude > 0.1f)
+            {
+                targetRotation = Quaternion.LookRotation(direction, Vector3.up);
 
-            // Calculer l'angle de rotation en fonction de la direction du joueur
-            float angle = playerMovement.direction > 0 ? 60f : 120f;
-            Quaternion angleRotation = Quaternion.Euler(0f, angle, 0f);
+                // Calculer l'angle de rotation en fonction de la direction du joueur
+                float angle = playerMovement.direction > 0 ? 60f : 120f;
+                Quaternion angleRotation = Quaternion.Euler(0f, angle, 0f);
 
-            // Faire pivoter la rotation actuelle du robot vers la rotation cible
-            targetRotation = Quaternion.RotateTowards(transform.rotation, angleRotation, rotationSpeed * Time.deltaTime);
+                // Faire pivoter la rotation actuelle du robot vers la rotation cible
+                targetRotation = Quaternion.RotateTowards(transform.rotation, angleRotation, rotationSpeed * Time.deltaTime);
+            }
+
+            transform.rotation = targetRotation;
         }
-
-        transform.rotation = targetRotation;
     }
 }
