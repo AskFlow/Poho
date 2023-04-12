@@ -16,9 +16,9 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        checkpoints = new List<CheckPoints>();
-        player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-        lastCheckpoint = checkpoints[0];
+        //checkpoints = new List<CheckPoints>();
+        //player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+        //lastCheckpoint = checkpoints[0];
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
@@ -40,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("Player mort !");
 
-        transform.position = lastCheckpoint.position;
+        //transform.position = lastCheckpoint.position;
         currentHealth = maxHealth;
         // Animation de mort � l'avenir
     }
@@ -52,7 +52,7 @@ public class PlayerHealth : MonoBehaviour
 
         // Mettre � jour le dernier checkpoint atteint
         Debug.Log("MAJ du checkpoint");
-        lastCheckpoint = checkpoint;
+        //lastCheckpoint = checkpoint;
     }
      void Update()
     {
