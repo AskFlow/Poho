@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+
+
     void Start()
     {
         animator = GetComponent<Animator>();
