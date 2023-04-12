@@ -28,16 +28,14 @@ public class MovableObject : MonoBehaviour
 
     void OnMouseOver()
     {
-        Debug.DrawRay(player.transform.position, transform.position, Color.red);
+        //Debug.DrawRay(player.transform.position, transform.position - player.transform.position, Color.red);
 
         if (Input.GetKey(KeyCode.R))
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(player.transform.position, transform.position, out hit, 10.0f, movableLayer))
+            if (Physics.Raycast(player.transform.position, transform.position - player.transform.position, out hit, 8.0f, movableLayer))
             {
-                Debug.Log("oui");
-
                 isGrab = true;
                 col.isTrigger = true;
             }

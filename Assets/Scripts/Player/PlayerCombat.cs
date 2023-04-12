@@ -58,17 +58,19 @@ public class PlayerCombat : MonoBehaviour
         //}
     }
 
-    void AttackMelee(){
+    void AttackMelee()
+    {
         // Jouer l'animation de l'attaque
-        animator.SetBool("isAttackingMelee", true);
+        animator.SetTrigger("isAttackingMelee");
 
         // Detecter les ennemies dans la range
         Collider[] hitEnemies = Physics.OverlapSphere(attackMeleePoint.position, attackMeleeRange, enemyLayers);
 
         // Appliquer les damages
-        foreach(Collider enemy in hitEnemies){
+        foreach (Collider enemy in hitEnemies)
+        {
             Debug.Log("Vous avez touché " + enemy.name);
-            enemy.GetComponent<EnemyHealth>().TakeDamage(attackMeleeDamage);
+            enemy.GetComponent<EnemyHealth>().ApplyDamage(attackMeleeDamage);
         }
     }
 
