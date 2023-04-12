@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public float JumpSpeed = 15;
     public float direction = 1.0f;
 
-    public float direction = 1.0f;
 
     public bool isJumping;
     public bool isGrounded;
@@ -31,14 +30,6 @@ public class PlayerMovement : MonoBehaviour
     void Update() {
 
         float h = Input.GetAxis("Horizontal") * Speed;
-        if(h > 0.0f)
-        {
-            direction = 1.0f;
-        }
-        else if (h < 0.0f)
-        {
-            direction = -1.0f;
-        }
 
         if (h > 0.0f)
         {

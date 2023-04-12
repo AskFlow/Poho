@@ -21,12 +21,13 @@ public class RobotFollowPlayer : MonoBehaviour
     {
         offset = transform.position - player.transform.position;
         playerMovement = player.GetComponent<PlayerMovement>();
+
     }
 
     void FixedUpdate()
     {
 
-        interm = new Vector3(offset.x* playerMovement.direction, offset.y, offset.z);
+        interm = new Vector3(offset.x* playerMovement.direction + -1.13661f, offset.y + 3.46f, offset.z + 0.4494041f);
         Vector3 targetPosition = player.transform.position + interm;
 
         targetPosition.x += followDistance;

@@ -56,6 +56,6 @@ public class PlayerHealth : MonoBehaviour
     }
      void Update()
     {
-        Debug.Log(currentHealth);
+
     }
 }
