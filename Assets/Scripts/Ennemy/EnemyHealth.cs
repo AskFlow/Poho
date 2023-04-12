@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(int damage){
+    public void ApplyDamage(int damage){
         currentHealth -= damage;
 
         // Animation de dégâts à l'avenir
@@ -36,7 +36,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if(collision.gameObject.tag == "Shockwave")
         {
-            TakeDamage(20);
+            ApplyDamage(20);
         }
     }
 }
