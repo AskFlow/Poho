@@ -68,7 +68,7 @@ public class PlayerCombat : MonoBehaviour
         // Appliquer les damages
         foreach(Collider enemy in hitEnemies){
             Debug.Log("Vous avez touché " + enemy.name);
-            enemy.GetComponent<EnemyHealth>().TakeDamage(attackMeleeDamage);
+            enemy.GetComponent<EnemyHealth>().ApplyDamage(attackMeleeDamage);
         }
     }
 

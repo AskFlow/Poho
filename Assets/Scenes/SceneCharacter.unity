@@ -261,6 +261,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a0be5860c466d984d9557ca7fe42f14d, type: 3}
   m_PrefabInstance: {fileID: 1219086813}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &198898693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198898686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d2e4de9805ece47a8c80c8fd3989d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &363721773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,7 +1070,7 @@ PrefabInstance:
     - target: {fileID: -6766637372586239246, guid: a0be5860c466d984d9557ca7fe42f14d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cac7fdd03a614cd48ba740a42becaa82, type: 2}
+      objectReference: {fileID: 2100000, guid: 15dcf5754258bca4da97dbc0eef87676, type: 2}
     - target: {fileID: -3896556230942696373, guid: a0be5860c466d984d9557ca7fe42f14d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
