@@ -1,4 +1,3 @@
-using InguzPings;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,6 +44,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         // Animation de mort � l'avenir
     }
+
     public void ActivateCheckpoint(CheckPoints checkpoint)
     {
         // Activer le checkpoint
