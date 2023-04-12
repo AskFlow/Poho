@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
 {
+
+
+    //animation
+    Animator ennemiChargeAnimator;
+
     public GameObject bullet;
     public LayerMask PlayerLayer;
     public Transform bulletpos;
@@ -32,13 +37,17 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
     [SerializeField] private float chargeTime;
     private bool isCharging;
 
+    EnemyHealth enemyHealth;
+    PlayerHealth playerHealth;
     private void Start()
     {
+        ennemiChargeAnimator = GetComponent<Animator>();
         startpoint = transform.position;
     }
     // Update is called once per frame
     void Update()
-    {
+    {        
+       // ennemiChargeAnimator.SetFloat("walk",moveSpeed);
         Vector3 differance = player.position - gun.transform.position;
         float rotZ = Mathf.Atan2(differance.y, differance.x) * Mathf.Rad2Deg;
         gun.transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
@@ -47,6 +56,12 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         {
             inRange = true;
             StartCoroutine(chargeDelay());
+            ennemiChargeAnimator.SetBool("canAttack", false);
+
+            Vector3 playerPos = player.position;
+            playerPos.y = transform.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
         }
         else if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
@@ -54,27 +69,41 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
             
 
             if (Time.time >= nextAttackTime)
-            {
-                AttackMelee();
+            {               
+                AttackMelee();      
                 nextAttackTime = Time.time + 3f / attackRate;
                 Debug.Log("attackmelee");
             }
+
+            Vector3 playerPos = player.position;
+            playerPos.y = transform.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
         }
         else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
+        {            
+            transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);           
             inRange = false;
-            
-        }
-        Debug.Log(moveSpeed);
+
+            Vector3 playerPos = player.position;
+            playerPos.y = transform.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
+        }        
+
+        if (Vector3.Distance(transform.position, player.position) > followPlayerRange && Vector3.Distance(transform.position, player.position) > attackRange)
+        {
+            moveSpeed = 0;
+        } 
     }
 
     void FixedUpdate()
     {
         if (inRange)
         {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);            
         }
+       
     }
 
     void OnDrawGizmos()
@@ -91,7 +120,7 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
     void AttackMelee()
     {
         // Jouer l'animation de l'attaque (à l'avenir)
-
+        ennemiChargeAnimator.SetBool("canAttack", true);
         // Detecter les ennemies dans la range
         Collider[] hitPlayer = Physics.OverlapSphere(transform.position, attackRange, PlayerLayer);
 
@@ -99,7 +128,8 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         foreach (Collider Player in hitPlayer)
         {
             Debug.Log("Vous avez touché " + Player.name);
-        }
+            Player.GetComponent<PlayerHealth>().ApplyDamage(100);
+        }       
     }
  
     IEnumerator chargeDelay()
@@ -108,8 +138,8 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         yield return new WaitForSeconds(2);
         moveSpeed = 6;
         yield return new WaitForSeconds(2);
-        moveSpeed = 3;
-    }
+        moveSpeed = 3;     
+    }   
 }
 
   

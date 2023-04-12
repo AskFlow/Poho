@@ -26,10 +26,11 @@ public class PlayerCombat : MonoBehaviour
     public float attackMeleeRate = 2f;
     public float attackDistanceRate = 2f;
     public float moveObjectDistance = 3f;
-
+                                
     float nextAttackMeleeTime = 0f;
 
     float nextAttackDistanceTime = 0f;
+    EnemyHealth enemyHealth;
 
     private void Start()
     {
