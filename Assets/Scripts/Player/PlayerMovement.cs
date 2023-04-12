@@ -7,10 +7,10 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody rb;
     public float Speed = 5;
     public float JumpSpeed = 15;
+    public float direction = 1.0f;
 
     public bool isJumping;
     public bool isGrounded;
-
 
     float distToGround;
     public Transform groundCheck;
@@ -25,8 +25,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() {
 
-
         float h = Input.GetAxis("Horizontal") * Speed;
+
+        if (h > 0.0f)
+        {
+            direction = 1.0f;
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+        else if (h < 0.0f)
+        {
+            direction = -1.0f;
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
 
         rb.velocity = new Vector2(h, rb.velocity.y);
 
