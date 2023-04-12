@@ -24,7 +24,7 @@ public class RangedEnemyController2attack : MonoBehaviour
     private float timeBtwnShots;
 
     public float attackRate = 1f;
-    float nextAttackTime = 0f;
+    float nextAttackTime = 3f;
 
    
 
@@ -49,19 +49,20 @@ public class RangedEnemyController2attack : MonoBehaviour
             {
                 timer = 0;
                 shoot();
-              
+  
             }
         }
         else if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
             inRange = true;
-           
-            if (Time.time >= nextAttackTime)
+            timer += Time.deltaTime;
+            if (timer > 2)
             {
+                timer = 0;
                 AttackMelee();
-                nextAttackTime = Time.time + 3f / attackRate;
-                Debug.Log("attackmelee");
+               
             }
+
             Vector3 playerPos = player.position;
             playerPos.y = transform.position.y;
             Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
@@ -101,8 +102,8 @@ public class RangedEnemyController2attack : MonoBehaviour
 
         // Appliquer les damages
         foreach (Collider Player in hitPlayer)
-        {
-            Debug.Log("Vous avez touché " + Player.name);
+        {           
+           //applydamage
         }
     }
 
@@ -116,8 +117,8 @@ public class RangedEnemyController2attack : MonoBehaviour
        
         // Appliquer les damages
         foreach (Collider Player in hitPlayer)
-        {
-            Debug.Log("Vous avez touché " + Player.name);           
+        {            
+            Player.GetComponent<PlayerHealth>().ApplyDamage(100);
         }
     }
 }

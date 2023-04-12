@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public float maxHealth = 100f;
 
     [SerializeField]
-    private int currentHealth;
+    private float currentHealth;
+    public Animator animator;
+
+    private void Awake()
+    {
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
+        }
+    }
 
     void Start()
     {
@@ -16,7 +25,6 @@ public class EnemyHealth : MonoBehaviour
 
     public void ApplyDamage(int damage){
         currentHealth -= damage;
-
         // Animation de dégâts à l'avenir
 
         if(currentHealth <= 0){
@@ -25,18 +33,32 @@ public class EnemyHealth : MonoBehaviour
     }
 
     void Die(){
+        animator.SetTrigger("die");
         Debug.Log("Ennemi mort !");
+    }
 
+    void DestroyEnnemy()
+    {
         Destroy(gameObject);
+    }
 
-        // Animation de mort à l'avenir
+    public float getCurrentHealth()
+    {
+        return currentHealth;
+    }
+    public float getMaxHealth()
+    {
+        return maxHealth;
     }
 
     private void OnTriggerEnter(Collider collision)
     {
         if(collision.gameObject.tag == "Shockwave")
         {
-            ApplyDamage(20);
+            if (!(currentHealth <= 0))
+            {
+                ApplyDamage(20);
+            }    
         }
     }
 }

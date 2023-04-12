@@ -33,7 +33,6 @@ public class EnnemyBulletScipt : MonoBehaviour
         {
             //applydamage 
             Debug.Log("bullet touché");
-            Destroy(bullet);
         }
     }
 

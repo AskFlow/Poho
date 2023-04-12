@@ -36,8 +36,9 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
     [SerializeField] private float chargeSpeed;
     [SerializeField] private float chargeTime;
     private bool isCharging;
-   
 
+    EnemyHealth enemyHealth;
+    PlayerHealth playerHealth;
     private void Start()
     {
         ennemiChargeAnimator = GetComponent<Animator>();
@@ -45,9 +46,8 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
     }
     // Update is called once per frame
     void Update()
-    {
-        
-        ennemiChargeAnimator.SetFloat("walk",moveSpeed);
+    {        
+       // ennemiChargeAnimator.SetFloat("walk",moveSpeed);
         Vector3 differance = player.position - gun.transform.position;
         float rotZ = Mathf.Atan2(differance.y, differance.x) * Mathf.Rad2Deg;
         gun.transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
@@ -94,7 +94,7 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) > followPlayerRange && Vector3.Distance(transform.position, player.position) > attackRange)
         {
             moveSpeed = 0;
-        }  
+        } 
     }
 
     void FixedUpdate()
@@ -127,8 +127,9 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         // Appliquer les damages
         foreach (Collider Player in hitPlayer)
         {
-            Debug.Log("Vous avez touché " + Player.name);            
-        }
+            Debug.Log("Vous avez touché " + Player.name);
+            Player.GetComponent<PlayerHealth>().ApplyDamage(100);
+        }       
     }
  
     IEnumerator chargeDelay()
@@ -138,16 +139,7 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         moveSpeed = 6;
         yield return new WaitForSeconds(2);
         moveSpeed = 3;     
-    }
-    /*
-     void makeEnnemiRotation()
-    {
-        Vector3 playerPos = player.position;
-        Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
-    }
-    */
-     
+    }   
 }
 
   

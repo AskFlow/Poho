@@ -17,8 +17,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+    PlayerHealth playerHealth;
+
     void Start()
     {
+        playerHealth = FindObjectOfType<PlayerHealth>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
     }
@@ -50,5 +53,18 @@ public class PlayerMovement : MonoBehaviour
     {
         distToGround = GetComponent<Collider>().bounds.extents.y;
         return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {       
+        if (other.CompareTag("Checkpoint"))
+        {
+            Debug.Log("oui");
+            CheckPoints checkpoint = other.GetComponent<CheckPoints>();
+            if (!checkpoint.activated)
+            {
+                playerHealth.ActivateCheckpoint(checkpoint);
+            }
+        }
     }
 }
