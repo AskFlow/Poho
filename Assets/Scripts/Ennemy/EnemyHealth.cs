@@ -14,7 +14,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(int damage){
+    public void ApplyDamage(int damage){
         currentHealth -= damage;
 
         // Animation de dégâts à l'avenir
@@ -27,6 +27,16 @@ public class EnemyHealth : MonoBehaviour
     void Die(){
         Debug.Log("Ennemi mort !");
 
+        Destroy(gameObject);
+
         // Animation de mort à l'avenir
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.gameObject.tag == "Shockwave")
+        {
+            ApplyDamage(20);
+        }
     }
 }
