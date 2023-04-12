@@ -160,6 +160,11 @@ public class RunAway : MonoBehaviour
         }
     }
 
+    void DestroyEnnemy()
+    {
+        Destroy(gameObject);
+    }
+
     private float nextCluckTime = 0f;
     private float nextMoveTime = 0f;
     const float MIN_BTWN_CLUCKS = 2.0f;
