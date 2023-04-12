@@ -68,14 +68,14 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {       
-        if (other.CompareTag("Checkpoint"))
-        {
-            Debug.Log("oui");
-            CheckPoints checkpoint = other.GetComponent<CheckPoints>();
-            if (!checkpoint.activated)
-            {
-                playerHealth.ActivateCheckpoint(checkpoint);
-            }
-        }
+        //if (other.CompareTag("Checkpoint"))
+        //{
+        //    Debug.Log("oui");
+        //    CheckPoints checkpoint = other.GetComponent<CheckPoints>();
+        //    if (!checkpoint.activated)
+        //    {
+        //        playerHealth.ActivateCheckpoint(checkpoint);
+        //    }
+        //}
     }
 }
