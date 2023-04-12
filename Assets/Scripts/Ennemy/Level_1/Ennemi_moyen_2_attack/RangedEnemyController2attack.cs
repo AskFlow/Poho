@@ -7,7 +7,6 @@ public class RangedEnemyController2attack : MonoBehaviour
     public GameObject bullet;
     public LayerMask PlayerLayer;
     public Transform bulletpos;
-    public bool canShoot;
     public float timer;
     //////////////////
     public float moveSpeed;
@@ -95,8 +94,7 @@ public class RangedEnemyController2attack : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
      public void shoot()
-    {
-      
+    {      
         Instantiate(bullet, bulletpos.position, Quaternion.identity);
         
         Collider[] hitPlayer = Physics.OverlapSphere(transform.position, followPlayerRange, PlayerLayer);
