@@ -73,6 +73,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2611149553095877765}
   - component: {fileID: 2611149553090704807}
+  - component: {fileID: 8685969645938792331}
+  - component: {fileID: 419840258523856046}
+  - component: {fileID: 2804373483914407587}
   m_Layer: 0
   m_Name: Phantom
   m_TagString: Untagged
@@ -188,6 +191,49 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.3404492, y: 0.062087, z: -0.0000019669533}
     m_Extent: {x: 1.2045122, y: 0.58236337, z: 0.72810197}
   m_DirtyAABB: 0
+--- !u!64 &8685969645938792331
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611149553095981221}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 7446273b597096143b8ccf5dd5bf8dda, type: 3}
+--- !u!64 &419840258523856046
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611149553095981221}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 7446273b597096143b8ccf5dd5bf8dda, type: 3}
+--- !u!114 &2804373483914407587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611149553095981221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f3fd870b029f5449e96f976199a043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  currentHealth: 0
+  animator: {fileID: 2611149553086614375}
 --- !u!1 &2611149553095981223
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,12 +245,12 @@ GameObject:
   - component: {fileID: 2611149553095877767}
   - component: {fileID: 2611149553086614375}
   - component: {fileID: 2029723350269731619}
-  - component: {fileID: 5889207634290426664}
-  - component: {fileID: 7969224972011341190}
   - component: {fileID: 1472037888551208071}
   - component: {fileID: 7153832994660318280}
   - component: {fileID: 4830687112999279457}
   - component: {fileID: 4122383539438222067}
+  - component: {fileID: 1852236166937971614}
+  - component: {fileID: 2095206567788872495}
   m_Layer: 0
   m_Name: Phantom
   m_TagString: Untagged
@@ -272,36 +318,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5889207634290426664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2611149553095981223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff0c258803d4ff2429061b5c23c8c1c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mover: {fileID: 7969224972011341190}
-  displacementDist: 5
-  repelsDist: 5
-  repelsSpeed: 1000
-  teleportCooldown: 5
-  repelsCooldown: 3
---- !u!114 &7969224972011341190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2611149553095981223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71b460f5d6dc2548adf393e5a76a51e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &1472037888551208071
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -359,6 +375,36 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: a75b6178589a3c346b2e3dec13411209, type: 3}
+--- !u!114 &1852236166937971614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611149553095981223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7091804fafd9348b79216a8458293f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mover: {fileID: 2095206567788872495}
+  displacementDist: 5
+  repelsDist: 2
+  repelsSpeed: 1000
+  teleportCooldown: 4
+  repelsCooldown: 2
+--- !u!114 &2095206567788872495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2611149553095981223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc79c15a8de5a3747b085e0b877bd2e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2611149553095981225
 GameObject:
   m_ObjectHideFlags: 0

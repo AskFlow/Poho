@@ -9,8 +9,6 @@ public class Boss : MonoBehaviour
     public float moveSpeed;
     public Transform player;
     public Vector3 startpoint;
-    public float currentHP = 100;
-    public float maxHP = 100;
 
     //public Transform gun;
     //public Transform shotPoint;
@@ -24,6 +22,7 @@ public class Boss : MonoBehaviour
     private float timeAttack;
 
     private bool isAttacking = false;
+    private bool isMoving = false;
 
     private void Awake()
     {
@@ -47,6 +46,7 @@ public class Boss : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) <= followPlayerRange && Vector3.Distance(transform.position, player.position) >= attackRange && !isAttacking)
         {
             inRange = true;
+            isMoving = true;
             animator.SetFloat("moveSpeed", moveSpeed);
 
             Vector3 playerPos = player.position;
@@ -54,9 +54,9 @@ public class Boss : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(playerPos - transform.position);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 500f * Time.deltaTime);
         }
-        else if ((!(transform.position.x >= startpoint.x - 1 && transform.position.x <= startpoint.x + 1) || !(transform.position.z >= startpoint.z - 0.2 && transform.position.z <= startpoint.z + 0.2)) && !isAttacking)
+        else if ((!(transform.position.x >= startpoint.x - 1 && transform.position.x <= startpoint.x + 1) || !(transform.position.z >= startpoint.z - 0.2 && transform.position.z <= startpoint.z + 0.2)) && !isAttacking && isMoving)
         {
-            Debug.Log("NOT");
+            //Debug.Log("NOT");
             transform.position = Vector3.MoveTowards(transform.position, startpoint, moveSpeed * Time.deltaTime);
             inRange = false;
             animator.SetFloat("moveSpeed", moveSpeed);
@@ -69,6 +69,7 @@ public class Boss : MonoBehaviour
         else
         {
             animator.SetFloat("moveSpeed", 0f);
+            isMoving = false;
         }
 
         if (((transform.position.x >= startpoint.x - 1 && transform.position.x <= startpoint.x + 1) && (transform.position.z >= startpoint.z - 0.2 && transform.position.z <= startpoint.z + 0.2)) || isAttacking)
@@ -83,8 +84,9 @@ public class Boss : MonoBehaviour
         {
             if (timeAttack <= 0 && !isAttacking)
             {
+                Debug.Log("Attack");
                 isAttacking = true;
-                if (currentHP <= maxHP*0.5)
+                if (GetComponent<EnemyHealth>().getCurrentHealth() <= GetComponent<EnemyHealth>().getMaxHealth() * 0.5)
                 {
                     animator.SetTrigger("attackJump");
                 } else
