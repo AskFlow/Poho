@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(float damage){
+    public void ApplyDamage(int damage){
         currentHealth -= damage;
 
         // Animation de dégâts à l'avenir
@@ -58,7 +58,7 @@ public class EnemyHealth : MonoBehaviour
         {
             if (!(currentHealth <= 0))
             {
-                TakeDamage(20);
+                ApplyDamage(20);
             }    
         }
     }
