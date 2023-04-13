@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
+    [SerializeField] private InputActionAsset inputActions;
 
     public DialogueManager dialogueManager;
 
@@ -13,11 +15,20 @@ public class DialogueTrigger : MonoBehaviour
 
     private bool isEntered = false;
 
+    public void Start()
+    {
+        inputActions.Enable();
+
+    }
+
+
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.KeypadEnter)) 
+        if (inputActions.FindAction("Use").triggered) 
         {
+
             dialogueManager.DisplayNextSentence();
+            Debug.Log("wag");
         }
     }
     public void TriggerDialogue()

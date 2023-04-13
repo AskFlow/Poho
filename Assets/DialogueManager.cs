@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +15,11 @@ public class DialogueManager : MonoBehaviour
     public Animator animator;
 
     private Queue<string> sentences;
-
     void Start()
     {
         sentences = new Queue<string>();
     }
+
 
     public void StartDialogue(Dialogue dialogue)
     {
@@ -32,7 +33,7 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
-
+        Debug.Log(sentences.Count);
         DisplayNextSentence();
     }
 
@@ -62,6 +63,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         animator.SetBool("IsOpen", false);
+        Destroy(this);
 
     }
 
