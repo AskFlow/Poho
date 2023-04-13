@@ -6,18 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private AudioSystem audioSystem;
-    
-
-    public int maxHealth;
-    public int currenthealth;
+    public Vector2 lastCheckPointPos;
 
     void Start()
     {
-
-        currenthealth = maxHealth;
-
-        audioSystem = gameObject.GetComponent<AudioSystem>();
-           
+        audioSystem = gameObject.GetComponent<AudioSystem>();      
     }
 
     void Update()
@@ -28,18 +21,5 @@ public class GameManager : MonoBehaviour
     public void playAudio()
     {
         audioSystem.ReturnAudio();
-    }
-
-
-
-    void TakeDamage(int damage)
-    {
-        currenthealth -= damage;
-
-        if (currenthealth < 0)
-        {
-            Destroy(gameObject);
-
-        }
     }
 }

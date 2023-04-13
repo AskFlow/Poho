@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,11 +10,12 @@ public class PlayerMovement : MonoBehaviour
     public float JumpSpeed = 15;
     public float direction = 1.0f;
 
+    [SerializeField] private InputActionAsset inputActions;
+    public float zAxis;
 
     public bool isJumping;
     public bool isGrounded;
 
-    float distToGround;
     public Transform groundCheck;
 
     private Animator animator;
@@ -25,11 +27,17 @@ public class PlayerMovement : MonoBehaviour
         playerHealth = FindObjectOfType<PlayerHealth>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        inputActions.Enable();
+        zAxis = transform.position.z;
     }
 
     void Update() {
 
         float h = Input.GetAxis("Horizontal") * Speed;
+        transform.position = new Vector3(transform.position.x, transform.position.y, zAxis);
+
+        if(transform.rotation.y > 0) { transform.rotation = Quaternion.Euler(0, 90, 0); }
+        else if (transform.rotation.y < 0) { transform.rotation = Quaternion.Euler(0, -90, 0); }
 
         if (h > 0.0f)
         {
@@ -50,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isMoving", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && CheckGround()){
+        if (inputActions.FindAction("Jump").triggered && CheckGround()){
             isJumping = true;
         }
 
@@ -62,20 +70,14 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CheckGround()
     {
-        distToGround = GetComponent<Collider>().bounds.extents.y;
-        return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
-    }
-
-    void OnTriggerEnter(Collider other)
-    {       
-        //if (other.CompareTag("Checkpoint"))
-        //{
-        //    Debug.Log("oui");
-        //    CheckPoints checkpoint = other.GetComponent<CheckPoints>();
-        //    if (!checkpoint.activated)
-        //    {
-        //        playerHealth.ActivateCheckpoint(checkpoint);
-        //    }
-        //}
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, 0.1f))
+        {
+            if (hit.collider.gameObject.CompareTag("Ground"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

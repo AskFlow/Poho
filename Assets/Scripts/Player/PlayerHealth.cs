@@ -1,26 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
 
-    public List<CheckPoints> checkpoints;
-    public GameObject playerPrefab;
-    private GameObject player;
-    private CheckPoints lastCheckpoint;
     public HealthBar healthBar;
+
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        //checkpoints = new List<CheckPoints>();
-        //player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-        //lastCheckpoint = checkpoints[0];
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        gameManager = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
     }
 
     public void ApplyDamage(int damage)
@@ -36,26 +33,15 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-     void Die()
+    void Die()
     {
-        Debug.Log("Player mort !");
+        if (gameManager.lastCheckPointPos == Vector2.zero) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
-        //transform.position = lastCheckpoint.position;
+        Debug.Log("Player retourné au checkpoint !");
+
+        transform.position = gameManager.lastCheckPointPos;
         currentHealth = maxHealth;
+
         // Animation de mort � l'avenir
-    }
-
-    public void ActivateCheckpoint(CheckPoints checkpoint)
-    {
-        // Activer le checkpoint
-        checkpoint.activated = true;
-
-        // Mettre � jour le dernier checkpoint atteint
-        Debug.Log("MAJ du checkpoint");
-        //lastCheckpoint = checkpoint;
-    }
-     void Update()
-    {
-
     }
 }
