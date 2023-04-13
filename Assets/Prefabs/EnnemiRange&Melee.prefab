@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3830910435362079862, guid: cced24ddf96ad5541b90e4ffcdb45579, type: 3}
       propertyPath: m_Name
-      value: Grenadier 1
+      value: EnnemiRange&Melee
       objectReference: {fileID: 0}
     - target: {fileID: 3830910435362576470, guid: cced24ddf96ad5541b90e4ffcdb45579, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3830910435362576470, guid: cced24ddf96ad5541b90e4ffcdb45579, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60,6 +60,18 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 49aa0e65a0d01e64eb5c3f40ad235d5e, type: 2}
+    - target: {fileID: 3830910435373648240, guid: cced24ddf96ad5541b90e4ffcdb45579, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 49e9ebcc643af1d47bcc723d3cefec6d, type: 2}
+    - target: {fileID: 3830910435373648240, guid: cced24ddf96ad5541b90e4ffcdb45579, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 49e9ebcc643af1d47bcc723d3cefec6d, type: 2}
+    - target: {fileID: 3830910435373648240, guid: cced24ddf96ad5541b90e4ffcdb45579, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 49e9ebcc643af1d47bcc723d3cefec6d, type: 2}
     - target: {fileID: 7655521098547756415, guid: cced24ddf96ad5541b90e4ffcdb45579, type: 3}
       propertyPath: player
       value: 
