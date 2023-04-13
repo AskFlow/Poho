@@ -17,6 +17,8 @@ public class Checkpoint : MonoBehaviour
     public GameObject interactionUI;
     public KeyCode interactKey = KeyCode.E;
 
+    public AudioSource audio;
+
     private bool isInRange = false;
     private bool isFilling = false;
 
@@ -24,6 +26,7 @@ public class Checkpoint : MonoBehaviour
     {
         gameManager = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>();
         inputActions.Enable();
+        audio = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,6 +85,8 @@ public class Checkpoint : MonoBehaviour
         gameManager.lastCheckPointPos = transform.position;
 
         interactionUI.SetActive(false);
+
+        audio.Play(0);
     }
 
     private void ResetSlider()
