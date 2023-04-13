@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     public bool isJumping;
     public bool isGrounded;
 
-    float distToGround;
     public Transform groundCheck;
 
     private Animator animator;
@@ -67,16 +66,12 @@ public class PlayerMovement : MonoBehaviour
 
     public bool CheckGround()
     {
-        distToGround = GetComponent<Collider>().bounds.extents.y;
-        //return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
-
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround +0.01f))
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, 0.1f))
         {
             if (hit.collider.gameObject.CompareTag("Ground"))
             {
                 return true;
-
             }
         }
         return false;
