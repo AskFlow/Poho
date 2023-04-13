@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovableObject : MonoBehaviour
 {
     GameObject player;
     BoxCollider col;
     public LayerMask movableLayer;
+    [SerializeField] private InputActionAsset inputActions;
 
     bool isGrab = false;
 
@@ -15,6 +17,7 @@ public class MovableObject : MonoBehaviour
     {
         player = GameObject.Find("Player");
         col = GetComponent<Collider>() as BoxCollider;
+        inputActions.Enable();
     }
 
     private void Update()
@@ -37,7 +40,7 @@ public class MovableObject : MonoBehaviour
     {
         Debug.DrawRay(player.transform.position, transform.position - player.transform.position, Color.red);
 
-        if (Input.GetKey(KeyCode.R))
+        if (inputActions.FindAction("Telekinesie").IsPressed())
         {
             if (Physics.Raycast(player.transform.position, transform.position - player.transform.position, 7.0f, movableLayer))
             {

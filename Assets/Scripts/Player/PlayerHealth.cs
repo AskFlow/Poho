@@ -39,8 +39,9 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("Player retourné au checkpoint !");
 
-        transform.position = gameManager.lastCheckPointPos;
         currentHealth = maxHealth;
+        healthBar.SetHealth(currentHealth);
+        transform.position = gameManager.lastCheckPointPos;
 
         // Animation de mort � l'avenir
     }

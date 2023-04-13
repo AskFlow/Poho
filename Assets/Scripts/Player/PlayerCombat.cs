@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask movableLayer;
 
     public GameObject playerProjectile;
+
+    [SerializeField] private InputActionAsset inputActions;
 
     private Animator animator;
 
@@ -35,19 +38,21 @@ public class PlayerCombat : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        inputActions.Enable();
     }
 
     private void Update()
     {
         if(Time.time >= nextAttackMeleeTime){
-            if (Input.GetKeyDown(KeyCode.E)){
+            if (inputActions.FindAction("AttackMelee").IsPressed()){
                 AttackMelee();
                 nextAttackMeleeTime = Time.time + 1f / attackMeleeRate;
             }   
         }
 
         if(Time.time >= nextAttackDistanceTime){
-            if (Input.GetKeyDown(KeyCode.F)){
+            if (inputActions.FindAction("AttackDistance").IsPressed())
+            {
                 AttackDistance();
                 nextAttackDistanceTime = Time.time + 1f / attackDistanceRate;
             }   
@@ -75,55 +80,6 @@ public class PlayerCombat : MonoBehaviour
 
         Instantiate(playerProjectile, attackDistancePoint.position, attackDistancePoint.rotation);
     }
-
-    //void MoveObject()
-    //{
-    //    Debug.Log("MoveObject");
-
-    //    //RaycastHit2D hitObstacle = Physics2D.Raycast(transform.position, screenPosition - transform.position, moveObjectDistance);
-
-    //    Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
-    //    if (Physics.Raycast(ray, out RaycastHit hitObstacle, float.MaxValue, movableLayer))
-    //    {
-    //        if (hitObstacle.collider != null)
-    //        {
-    //            GameObject objectToMovable = hitObstacle.collider.gameObject;
-
-    //            objectToMovable.transform.SetPositionAndRotation(Input.mousePosition, objectToMovable.transform.rotation);
-    //        }
-    //    }
-
-    //    /*if (hitObstacle.collider != null)
-    //    {
-    //        Debug.Log(hitObstacle.collider.name);
-    //        Debug.DrawRay(transform.position, screenPosition - transform.position, Color.red);
-    //    }
-    //    else
-    //    {
-    //        Debug.DrawRay(transform.position, screenPosition - transform.position, Color.green);
-    //    }*/
-    //}
-
-    //Raycast check if WallMovable
-    //public string objectCast()
-    //{
-    //    Debug.Log("objectCast");
-    //    string result = "";
-    //    Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    RaycastHit2D hitObstacle = Physics2D.Raycast(obstacleRayObject.transform.position, mouseWorldPosition - obstacleRayObject.transform.position, obstacleRayDistance);
-    //    if (hitObstacle.collider != null)
-    //    {
-    //        Debug.Log(hitObstacle.collider.name);
-    //        result = hitObstacle.collider.name;
-    //        Debug.DrawRay(obstacleRayObject.transform.position, mouseWorldPosition - obstacleRayObject.transform.position, Color.red);
-    //    }
-    //    else
-    //    {
-    //        Debug.DrawRay(obstacleRayObject.transform.position, mouseWorldPosition - obstacleRayObject.transform.position, Color.green);
-    //    }
-    //    return result;
-    //}
 
     private void OnDrawGizmosSelected() {
         if(attackMeleePoint == null){
