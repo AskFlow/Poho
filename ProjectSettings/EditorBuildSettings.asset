@@ -11,7 +11,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Scene Map.unity
     guid: 314adf1ffe612e847a0383253423a99d
-  - enabled: 1
-    path: Assets/Scenes/BossSceneCamera.unity
-    guid: 87233b627bce10a4387a839376c51c0e
   m_configObjects: {}
