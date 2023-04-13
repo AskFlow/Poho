@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField]
     private float currentHealth;
     public Animator animator;
+    public bool isAnimImplemented = true;
 
     private void Awake()
     {
@@ -33,8 +34,13 @@ public class EnemyHealth : MonoBehaviour
     }
 
     void Die(){
-        animator.SetTrigger("die");
-        Debug.Log("Ennemi mort !");
+        if (isAnimImplemented)
+        {
+            animator.SetTrigger("die");
+        } else
+        {
+            DestroyEnnemy();
+        }
     }
 
     void DestroyEnnemy()
