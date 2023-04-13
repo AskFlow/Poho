@@ -107,7 +107,7 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
     IEnumerator attack()
     {
         yield return new WaitForSeconds(2);
-        playerHealth.ApplyDamage(20);
+        playerHealth.ApplyDamage(5);
     }
     void AttackMelee()
     {

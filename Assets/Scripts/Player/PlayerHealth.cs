@@ -35,7 +35,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
-        if (gameManager.lastCheckPointPos == Vector2.zero) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (gameManager.lastCheckPointPos == Vector2.zero || gameManager.lastCheckPointPos == new Vector2(-528.950012f, -1.71000004f)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         Debug.Log("Player retourné au checkpoint !");
 
