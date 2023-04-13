@@ -39116,7 +39116,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 47466ab0cce75db41b517cf871bcb425, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 47466ab0cce75db41b517cf871bcb425, type: 3}
       propertyPath: m_LocalScale.x
@@ -39641,7 +39641,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1ac0aef82f4f25d49be7cbe0297cab78, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.017
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
