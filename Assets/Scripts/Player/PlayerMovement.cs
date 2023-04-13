@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float JumpSpeed = 15;
     public float direction = 1.0f;
 
+    [SerializeField] private InputActionAsset inputActions;
 
     public bool isJumping;
     public bool isGrounded;
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         playerHealth = FindObjectOfType<PlayerHealth>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        inputActions.Enable();
     }
 
     void Update() {
@@ -50,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isMoving", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && CheckGround()){
+        if (inputActions.FindAction("Jump").triggered && CheckGround()){
             isJumping = true;
         }
 

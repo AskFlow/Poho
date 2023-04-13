@@ -13,7 +13,7 @@ public class PlayerCombat : MonoBehaviour
 
     public GameObject playerProjectile;
 
-    private Animator animator;
+    private     Animator animator;
 
     // Range et dégâts de l'attaque Melee
     public float attackMeleeRange = 1.5f;
