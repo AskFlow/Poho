@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float Speed = 5;
     public float JumpSpeed = 15;
     public float direction = 1.0f;
-
+    public float zAxis;
 
     public bool isJumping;
     public bool isGrounded;
@@ -25,11 +25,16 @@ public class PlayerMovement : MonoBehaviour
         playerHealth = FindObjectOfType<PlayerHealth>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        zAxis = transform.position.z;
     }
 
     void Update() {
 
         float h = Input.GetAxis("Horizontal") * Speed;
+        transform.position = new Vector3(transform.position.x, transform.position.y, zAxis);
+
+        if(transform.rotation.y > 0) { transform.rotation = Quaternion.Euler(0, 90, 0); }
+        else if (transform.rotation.y < 0) { transform.rotation = Quaternion.Euler(0, -90, 0); }
 
         if (h > 0.0f)
         {
@@ -63,7 +68,18 @@ public class PlayerMovement : MonoBehaviour
     public bool CheckGround()
     {
         distToGround = GetComponent<Collider>().bounds.extents.y;
-        return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
+        //return Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, distToGround +0.01f))
+        {
+            if (hit.collider.gameObject.CompareTag("Ground"))
+            {
+                return true;
+
+            }
+        }
+        return false;
     }
 
     void OnTriggerEnter(Collider other)
