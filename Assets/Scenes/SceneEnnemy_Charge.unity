@@ -371,7 +371,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   bulletpos: {fileID: 1224454888}
-  canShoot: 0
   timer: 0
   moveSpeed: 0
   player: {fileID: 0}
@@ -385,6 +384,7 @@ MonoBehaviour:
   attackRate: 1
   chargeSpeed: 0
   chargeTime: 0
+  playerHealth: {fileID: 0}
 --- !u!54 &248314135
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -588,7 +588,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  checkpoints: []
   playerPrefab: {fileID: 0}
+  healthBar: {fileID: 0}
 --- !u!114 &796145733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,6 +606,7 @@ MonoBehaviour:
   rb: {fileID: 796145737}
   Speed: 5
   JumpSpeed: 5
+  direction: 1
   isJumping: 0
   isGrounded: 0
   groundCheck: {fileID: 0}
@@ -895,6 +898,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a0be5860c466d984d9557ca7fe42f14d, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1034038393658140634, guid: a0be5860c466d984d9557ca7fe42f14d, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -1009,25 +1016,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7ff18af705c5f4a98c8e41cbc96288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 1224454889}
+  bullet: {fileID: 6201345344899456335, guid: a870edcbe28cd474f91bab776ab886a4, type: 3}
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8
   bulletpos: {fileID: 1224454888}
-  canShoot: 0
   timer: 0
-  moveSpeed: 0
+  moveSpeed: 3
   player: {fileID: 796145738}
   shotPoint: {fileID: 1334380711}
   gun: {fileID: 275650562}
   startpoint: {x: 0, y: 0, z: 0}
-  enemyProjectile: {fileID: 0}
+  enemyProjectile: {fileID: 6201345344899456335, guid: a870edcbe28cd474f91bab776ab886a4, type: 3}
   followPlayerRange: 10
   attackRange: 4
   startTimeBtwnShots: 0.5
   attackRate: 1
   chargeSpeed: 0
   chargeTime: 0
+  playerHealth: {fileID: 796145732}
 --- !u!95 &988040943
 Animator:
   serializedVersion: 4
@@ -1097,6 +1104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  animator: {fileID: 0}
 --- !u!1 &1183026058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1754,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   bulletpos: {fileID: 2103726031}
-  canShoot: 0
   timer: 0
   moveSpeed: 3
   player: {fileID: 0}
@@ -1760,6 +1767,7 @@ MonoBehaviour:
   attackRate: 1
   chargeSpeed: 0
   chargeTime: 0
+  playerHealth: {fileID: 0}
 --- !u!1 &1517783197
 GameObject:
   m_ObjectHideFlags: 0

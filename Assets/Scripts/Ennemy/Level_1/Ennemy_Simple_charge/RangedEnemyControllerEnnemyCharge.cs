@@ -5,14 +5,9 @@ using UnityEngine;
 public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
 {
 
-
-    //animation
-    Animator ennemiChargeAnimator;
-
     public GameObject bullet;
     public LayerMask PlayerLayer;
     public Transform bulletpos;
-    public bool canShoot;
     public float timer;
     //////////////////
     public float moveSpeed;
@@ -38,10 +33,9 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
     private bool isCharging;
 
     EnemyHealth enemyHealth;
-    PlayerHealth playerHealth;
+     public PlayerHealth playerHealth;
     private void Start()
     {
-        ennemiChargeAnimator = GetComponent<Animator>();
         startpoint = transform.position;
     }
     // Update is called once per frame
@@ -56,7 +50,6 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         {
             inRange = true;
             StartCoroutine(chargeDelay());
-            ennemiChargeAnimator.SetBool("canAttack", false);
 
             Vector3 playerPos = player.position;
             playerPos.y = transform.position.y;
@@ -71,8 +64,7 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
             if (Time.time >= nextAttackTime)
             {               
                 AttackMelee();      
-                nextAttackTime = Time.time + 3f / attackRate;
-                Debug.Log("attackmelee");
+                nextAttackTime = Time.time + 3f / attackRate;              
             }
 
             Vector3 playerPos = player.position;
@@ -112,24 +104,20 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-    public void shoot()
+    IEnumerator attack()
     {
-        Instantiate(bullet, bulletpos.position, Quaternion.identity);
+        yield return new WaitForSeconds(2);
+        playerHealth.ApplyDamage(20);
     }
-
     void AttackMelee()
     {
-        // Jouer l'animation de l'attaque (à l'avenir)
-        ennemiChargeAnimator.SetBool("canAttack", true);
         // Detecter les ennemies dans la range
         Collider[] hitPlayer = Physics.OverlapSphere(transform.position, attackRange, PlayerLayer);
-
-        // Appliquer les damages
-        foreach (Collider Player in hitPlayer)
+        for (int i = 0; i < hitPlayer.Length; i++) 
         {
-            Debug.Log("Vous avez touché " + Player.name);
-            Player.GetComponent<PlayerHealth>().ApplyDamage(100);
-        }       
+            if (hitPlayer[i].tag == "Player")
+            StartCoroutine(attack());
+        }        
     }
  
     IEnumerator chargeDelay()
@@ -139,7 +127,7 @@ public class RangedEnemyControllerEnnemyCharge : MonoBehaviour
         moveSpeed = 6;
         yield return new WaitForSeconds(2);
         moveSpeed = 3;     
-    }   
+    }
 }
 
   
