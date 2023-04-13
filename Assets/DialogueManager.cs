@@ -14,17 +14,20 @@ public class DialogueManager : MonoBehaviour
 
     public Animator animator;
 
+    public AudioSource audio;
+
     private Queue<string> sentences;
     void Start()
     {
         sentences = new Queue<string>();
+        audio = GetComponent<AudioSource>();
     }
 
 
     public void StartDialogue(Dialogue dialogue)
     {
         animator.SetBool("IsOpen", true);
-
+        audio.Play(0);
         nameText.text = dialogue.name;
 
         sentences.Clear();
@@ -63,6 +66,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         animator.SetBool("IsOpen", false);
+        audio.Stop();
         Destroy(this);
 
     }
