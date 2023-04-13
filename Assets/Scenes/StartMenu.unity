@@ -479,7 +479,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: QUIT
+  m_text: QUITTER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c232421f99f79674783a347364eba280, type: 2}
   m_sharedMaterial: {fileID: -2743120017588798815, guid: c232421f99f79674783a347364eba280, type: 2}
@@ -958,7 +958,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: Q
+  m_Text: A
 --- !u!1 &128050308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1718,7 +1718,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: START GAME
+  m_text: JOUER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c232421f99f79674783a347364eba280, type: 2}
   m_sharedMaterial: {fileID: -2743120017588798815, guid: c232421f99f79674783a347364eba280, type: 2}
@@ -5994,7 +5994,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0
-  m_Text: Space
+  m_Text: Espace
 --- !u!1 &1301001008
 GameObject:
   m_ObjectHideFlags: 0
@@ -6268,7 +6268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337213649}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -957, y: -452, z: 0}
+  m_LocalPosition: {x: -960, y: -545, z: 0}
   m_LocalScale: {x: 2.59375, y: 2.59375, z: 2.59375}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -7080,7 +7080,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OPTION
+  m_text: OPTIONS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c232421f99f79674783a347364eba280, type: 2}
   m_sharedMaterial: {fileID: -2743120017588798815, guid: c232421f99f79674783a347364eba280, type: 2}
@@ -10033,7 +10033,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BACK
+  m_text: RETOUR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c232421f99f79674783a347364eba280, type: 2}
   m_sharedMaterial: {fileID: -2743120017588798815, guid: c232421f99f79674783a347364eba280, type: 2}
