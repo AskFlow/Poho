@@ -37,6 +37,7 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
+ 
         /*
         Vector3 differance = player.position - gun.transform.position;
         float rotZ = Mathf.Atan2(differance.y, differance.x) * Mathf.Rad2Deg;
@@ -89,6 +90,7 @@ public class Boss : MonoBehaviour
                 if (GetComponent<EnemyHealth>().getCurrentHealth() <= GetComponent<EnemyHealth>().getMaxHealth() * 0.5)
                 {
                     animator.SetTrigger("attackJump");
+                    GetComponent<BoxCollider>().center = new Vector3(GetComponent<BoxCollider>().center.x, 0.2f, GetComponent<BoxCollider>().center.z);
                 } else
                 {
                     animator.SetTrigger("attackSimple");
@@ -124,5 +126,10 @@ public class Boss : MonoBehaviour
     {
         //Instantiate(enemyProjectile, shotPoint.position, shotPoint.transform.rotation);
         isAttacking = false;
+    }
+
+    void resetPos()
+    {
+        GetComponent<BoxCollider>().center = new Vector3(GetComponent<BoxCollider>().center.x, 0.125f, GetComponent<BoxCollider>().center.z);
     }
 }

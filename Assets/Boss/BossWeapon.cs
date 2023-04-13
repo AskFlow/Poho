@@ -5,25 +5,19 @@ using UnityEngine;
 public class BossWeapon : MonoBehaviour
 {
     public int attackDamage = 20;
-    public int enragedAttackDamage = 40;
+    public float totalAttackTimer = 1.0f;
+    private float attackTimer = 0.0f;
 
-    public Transform attackTransform;
-    public float attackRange = 1f;
-    public LayerMask attackMask;
-
-    public void Attack()
+    void Update()
     {
-        Debug.Log("Attack");
-        /*
-        Collider[] colInfo = Physics.OverlapSphere(attackTransform.position, attackRange);
-        foreach (Collider col in colInfo)
-        {
-            Debug.Log(col.name);
-        }*/
-
+        attackTimer -= Time.deltaTime;
     }
-    void OnDrawGizmosSelected()
+    private void OnTriggerEnter(Collider collision)
     {
-        //Gizmos.DrawWireSphere(attackTransform.position, attackRange);
+        if (collision.gameObject.tag == "Player" && attackTimer <= 0)
+        {
+            attackTimer = totalAttackTimer;
+            collision.GetComponent<PlayerHealth>().ApplyDamage(attackDamage);  
+        }
     }
 }

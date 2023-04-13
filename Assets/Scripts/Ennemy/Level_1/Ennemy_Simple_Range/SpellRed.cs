@@ -23,4 +23,12 @@ public class SpellRed : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.GetComponent<PlayerHealth>().ApplyDamage(20);
+        }
+    }
 }
